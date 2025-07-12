@@ -2,9 +2,9 @@
 title: "Age-Sex Explorer"
 author: "GlobalPopScope Team"
 output: html_document
----
+```
 
-```{{{r setup, include=FALSE}}}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(wpp2022)
 library(dplyr)
