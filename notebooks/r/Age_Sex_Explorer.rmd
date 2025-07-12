@@ -1,0 +1,45 @@
+---
+title: "Age-Sex Explorer"
+author: "GlobalPopScope Team"
+output: html_document
+---
+
+```{{{r setup, include=FALSE}}}
+knitr::opts_chunk$set(echo = TRUE)
+library(wpp2022)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(knitr)
+
+# Load age-sex projection dataset
+data(popprojAge1dt)
+head(popprojAge1dt)
+
+# Filter for India in 2025
+india_data <- popprojAge1dt %>%
+  filter(name == "India", year == 2025) %>%
+  select(age, popM, popF)
+
+# Ensure age group order is preserved
+india_data$age <- factor(india_data$age, levels = india_data$age)
+
+
+# Reshape data for plotting
+india_long <- india_data %>%
+  pivot_longer(cols = c(popM, popF), names_to = "Gender", values_to = "Population") %>%
+  mutate(Population = ifelse(Gender == "popM", -Population, Population),
+         Gender = recode(Gender, popM = "Male", popF = "Female"))
+
+# Plot pyramid
+ggplot(india_long, aes(x = age, y = Population, fill = Gender)) +
+  geom_bar(stat = "identity", width = 0.8) +
+  coord_flip() +
+  scale_y_continuous(labels = abs) +
+  labs(title = "Population Pyramid of India (2025)",
+       x = "Age Group",
+       y = "Population",
+       fill = "Gender") +
+  theme_minimal()
+
+

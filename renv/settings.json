@@ -15,5 +15,24 @@
   "vcs.ignore.cellar": true,
   "vcs.ignore.library": true,
   "vcs.ignore.local": true,
-  "vcs.manage.ignores": true
+  "vcs.manage.ignores": true,
+  "r.rterm.windows": "C:\\Program Files\\R\\R-4.x.x\\bin\\R.exe",
+"r.lsp.path": "C:\\Program Files\\R\\R-4.x.x\\bin\\R.exe",
+"r.plot.useHttpgd": true,
+"r.bracketedPaste": true,
+"r.sessionWatcher": true
+  "r.sessionWatcher.enabled": true,
+  "r.sessionWatcher.restartOnCrash": true,
+  "r.sessionWatcher.restartOnExit": true,
+  "r.sessionWatcher.restartOnError": true,
+  "r.sessionWatcher.restartOnTimeout": true,
+  "r.sessionWatcher.timeout": 60,
+  "r.rterm.lspArgs": [
+    "--quiet",
+    "--slave"
+  ],
+  "r.rterm.lspArgs.windows": [
+    "--quiet",
+    "--slave"
+  ]
 }
