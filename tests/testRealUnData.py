@@ -5,39 +5,24 @@ import json
 def load_undata(filepath="src/python/undata.json"):
     try:
         with open(filepath, "r", encoding="utf-8") as f:
-            return json.load(f) 
-    except Exception as e:
-        st.error(f"Error loading UN data: {e}")
-        return None 
-    
-# def load_undata(filepath="src\python\undata.json"):
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         st.error(f"Error loading UN data: {e}")
-        return None
+        return []
 
 # 🧭 Extract indicators from loaded JSON
 def fetch_indicators(undata):
-    if not undata:
-        return []
-    
-    # Adjust depending on structure of undata.json
-    # Example: if undata["indicators"] is a list of dicts
-    indicators = undata.get("indicators", [])  # Replace this key based on actual structure
-    return [{"code": ind.get("code"), "title": ind.get("title")} for ind in indicators if ind.get("code")]
+    indicators = []
+    for item in undata:
+        if isinstance(item, dict) and "code" in item and "title" in item:
+            indicators.append({"code": item["code"], "title": item["title"]})
+    return indicators
 
 # 🔍 Get full data for a selected indicator
 def fetch_indicator_data(undata, indicator_code):
-    if not undata:
-        return None
-    
-    # Replace with actual logic—example assumes list of indicators
-    for ind in undata.get("indicators", []):
-        if ind.get("code") == indicator_code:
-            return ind  # Return full dict with metadata + values
-
+    for item in undata:
+        if isinstance(item, dict) and item.get("code") == indicator_code:
+            return item
     return None
 
 # 🚀 Load once
@@ -54,7 +39,7 @@ if indicators:
 
     if data:
         st.subheader(f"Data for {indicator_options[selected]}")
-        st.json(data)  # You can later format this as a table or chart
+        st.json(data)
     else:
         st.warning("No data available for selected indicator.")
 else:
